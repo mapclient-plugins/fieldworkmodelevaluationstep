@@ -7,8 +7,8 @@ import os
 from PySide import QtGui
 from PySide import QtCore
 
-from mountpoints.workflowstep import WorkflowStepMountPoint
-from fieldworkmodelevaluationstep.configuredialog import ConfigureDialog
+from mapclient.mountpoints.workflowstep import WorkflowStepMountPoint
+from mapclientplugins.fieldworkmodelevaluationstep.configuredialog import ConfigureDialog
 
 
 class FieldworkModelEvaluationStep(WorkflowStepMountPoint):
