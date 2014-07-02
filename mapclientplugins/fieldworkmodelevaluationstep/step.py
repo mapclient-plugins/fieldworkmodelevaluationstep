@@ -13,8 +13,7 @@ from mapclientplugins.fieldworkmodelevaluationstep.configuredialog import Config
 
 class FieldworkModelEvaluationStep(WorkflowStepMountPoint):
     '''
-    Skeleton step which is intended to be a helpful starting point
-    for new steps.
+    Step for evaluating fieldwork models.
     '''
 
     def __init__(self, location):
