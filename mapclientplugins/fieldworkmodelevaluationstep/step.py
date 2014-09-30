@@ -38,6 +38,22 @@ class FieldworkModelEvaluationStep(WorkflowStepMountPoint):
         self.GF = None
         self.evalPoints = None
 
+    def _parseElems(self):
+        inputStr = self._config['elements']
+        if inputStr=='all':
+            elems = 'all'
+        else:
+            elems = []
+            words = inputStr.split(',')
+            for w in words:
+                if '-' in w:
+                    x0,x1 = w.split('-')
+                    elems += range(int(x0), int(x1)+1)
+                else:
+                    elems.append(int(w))
+
+        return elems
+
     def execute(self):
         '''
         Add your code here that will kick off the execution of the step.
@@ -49,22 +65,21 @@ class FieldworkModelEvaluationStep(WorkflowStepMountPoint):
             self.evalPoints = self.GF.get_all_point_coordinates()
         else:
             disc = eval(self._config['discretisation'])
+            elems = self._parseElems()
             if isinstance(disc, float):
-                if self._config['elements']=='all':
+                if elems=='all':
                     self.evalPoints = self.GF.discretiseAllElementsRegularGeoD( self, disc,\
                                         geoCoords=True, unpack=True)[1]
                 else:
-                    elems = eval(self._config['elements'])
                     X = []
                     for e in elems:
                         X.append(discretiseElementRegularGeoD( e, disc, geoCoords=True ))
 
                     self.evalPoints = np.vstack(X)
             else:
-                if self._config['elements']=='all':
+                if elems=='all':
                     self.evalPoints = self.GF.evaluate_geometric_field(disc).T
                 else:
-                    elems = eval(self._config['elements'])
                     self.evalPoints = self.GF.evaluate_geometric_field_in_elements( disc,\
                         elems).T
 
