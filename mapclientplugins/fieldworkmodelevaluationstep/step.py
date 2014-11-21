@@ -28,7 +28,7 @@ class FieldworkModelEvaluationStep(WorkflowStepMountPoint):
                       'ju#fieldworkmodel'))
         self.addPort(('http://physiomeproject.org/workflow/1.0/rdf-schema#port',
                       'http://physiomeproject.org/workflow/1.0/rdf-schema#provides',
-                      'ju#pointcoordinates'))
+                      'http://physiomeproject.org/workflow/1.0/rdf-schema#pointcoordinates'))
         self._config = {}
         self._config['identifier'] = ''
         self._config['discretisation'] = '[10,10]'
