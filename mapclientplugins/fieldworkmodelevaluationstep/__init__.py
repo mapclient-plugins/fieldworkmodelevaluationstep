@@ -19,5 +19,8 @@ This file is part of MAP Client. (http://launchpad.net/mapclient)
 """
 __version__ = '0.1.0'
 __author__ = 'Ju Zhang'
+__stepname__ = 'Fieldwork Model Evaluation'
+__location__ = 'https://github.com/mapclient-plugins/fieldworkmodelevaluationstep/archive/master.zip'
+
 from mapclientplugins.fieldworkmodelevaluationstep import step
 import mapclientplugins.fieldworkmodelevaluationstep.resources_rc
