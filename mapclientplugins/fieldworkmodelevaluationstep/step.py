@@ -2,10 +2,10 @@
 '''
 MAP Client Plugin Step
 '''
-import os
+import json
+import numpy as np
 
 from PySide import QtGui
-from PySide import QtCore
 
 from mapclient.mountpoints.workflowstep import WorkflowStepMountPoint
 from mapclientplugins.fieldworkmodelevaluationstep.configuredialog import ConfigureDialog
@@ -32,7 +32,7 @@ class FieldworkModelEvaluationStep(WorkflowStepMountPoint):
         self._config = {}
         self._config['identifier'] = ''
         self._config['discretisation'] = '[10,10]'
-        self._config['node coordinates'] = 'False'
+        self._config['node coordinates'] = False
         self._config['elements'] = 'all'
 
         self.GF = None
@@ -61,7 +61,7 @@ class FieldworkModelEvaluationStep(WorkflowStepMountPoint):
         may be connected up to a button in a widget for example.
         '''
         # Put your execute step code here before calling the '_doneExecution' method.
-        if self._config['node coordinates']=='True':
+        if self._config['node coordinates']:
             self.evalPoints = self.GF.get_all_point_coordinates()
         else:
             disc = eval(self._config['discretisation'])
@@ -73,7 +73,7 @@ class FieldworkModelEvaluationStep(WorkflowStepMountPoint):
                 else:
                     X = []
                     for e in elems:
-                        X.append(discretiseElementRegularGeoD( e, disc, geoCoords=True ))
+                        X.append(self.GF.discretiseElementRegularGeoD( e, disc, geoCoords=True ))
 
                     self.evalPoints = np.vstack(X)
             else:
@@ -109,7 +109,7 @@ class FieldworkModelEvaluationStep(WorkflowStepMountPoint):
         then set:
             self._configured = True
         '''
-        dlg = ConfigureDialog()
+        dlg = ConfigureDialog(QtGui.QApplication.activeWindow().currentWidget())
         dlg.identifierOccursCount = self._identifierOccursCount
         dlg.setConfig(self._config)
         dlg.validate()
@@ -133,7 +133,7 @@ class FieldworkModelEvaluationStep(WorkflowStepMountPoint):
         '''
         self._config['identifier'] = identifier
 
-    def serialize(self, location):
+    def serialize(self):
         '''
         Add code to serialize this step to disk.  The filename should
         use the step identifier (received from getIdentifier()) to keep it
@@ -141,31 +141,16 @@ class FieldworkModelEvaluationStep(WorkflowStepMountPoint):
         disk is:
             filename = getIdentifier() + '.conf'
         '''
-        configuration_file = os.path.join(location, self.getIdentifier() + '.conf')
-        conf = QtCore.QSettings(configuration_file, QtCore.QSettings.IniFormat)
-        conf.beginGroup('config')
-        conf.setValue('identifier', self._config['identifier'])
-        conf.setValue('discretisation', self._config['discretisation'])
-        conf.setValue('node coordinates', self._config['node coordinates'])
-        conf.setValue('elements', self._config['elements'])
-        conf.endGroup()
+        return json.dumps(self._config, default=lambda o: o.__dict__, sort_keys=True, indent=4)
 
-
-    def deserialize(self, location):
+    def deserialize(self, string):
         '''
         Add code to deserialize this step from disk.  As with the serialize 
         method the filename should use the step identifier.  Obviously the 
         filename used here should be the same as the one used by the
         serialize method.
         '''
-        configuration_file = os.path.join(location, self.getIdentifier() + '.conf')
-        conf = QtCore.QSettings(configuration_file, QtCore.QSettings.IniFormat)
-        conf.beginGroup('config')
-        self._config['identifier'] = conf.value('identifier', '')
-        self._config['discretisation'] = conf.value('discretisation', '[10,10]')
-        self._config['node coordinates'] = conf.value('node coordinates', 'False')
-        self._config['elements'] = conf.value('elements', 'all')
-        conf.endGroup()
+        self._config.update(json.loads(string))
 
         d = ConfigureDialog()
         d.identifierOccursCount = self._identifierOccursCount

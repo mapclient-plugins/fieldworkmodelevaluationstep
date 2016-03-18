@@ -63,7 +63,7 @@ class ConfigureDialog(QtGui.QDialog):
         else:
             self._ui.lineEdit0.setStyleSheet(INVALID_STYLE_SHEET)
 
-        self._ui.buttonBox.button(QDialogButtonBox.Ok).setEnabled(valid)
+        # self._ui.buttonBox.button(QDialogButtonBox.Ok).setEnabled(valid)
         return valid
 
     def getConfig(self):
@@ -76,7 +76,7 @@ class ConfigureDialog(QtGui.QDialog):
         config = {}
         config['identifier'] = self._ui.lineEdit0.text()
         config['discretisation'] = self._ui.lineEdit1.text()
-        config['node coordinates'] = self._ui.lineEdit2.text()
+        config['node coordinates'] = self._ui.lineEdit2.text() == 'True'
         config['elements'] = self._ui.lineEdit3.text()
         return config
 
@@ -89,6 +89,6 @@ class ConfigureDialog(QtGui.QDialog):
         self._previousIdentifier = config['identifier']
         self._ui.lineEdit0.setText(config['identifier'])
         self._ui.lineEdit1.setText(config['discretisation'])
-        self._ui.lineEdit2.setText(config['node coordinates'])
+        self._ui.lineEdit2.setText(str(config['node coordinates']))
         self._ui.lineEdit3.setText(config['elements'])
 
