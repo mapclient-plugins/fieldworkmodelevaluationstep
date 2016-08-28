@@ -2,8 +2,8 @@
 '''
 MAP Client Plugin Step
 '''
-import os
 import json
+import numpy as np
 
 from PySide import QtGui
 
@@ -32,7 +32,7 @@ class FieldworkModelEvaluationStep(WorkflowStepMountPoint):
         self._config = {}
         self._config['identifier'] = ''
         self._config['discretisation'] = '[10,10]'
-        self._config['node coordinates'] = 'False'
+        self._config['node coordinates'] = False
         self._config['elements'] = 'all'
 
         self.GF = None
@@ -61,7 +61,7 @@ class FieldworkModelEvaluationStep(WorkflowStepMountPoint):
         may be connected up to a button in a widget for example.
         '''
         # Put your execute step code here before calling the '_doneExecution' method.
-        if self._config['node coordinates']=='True':
+        if self._config['node coordinates']:
             self.evalPoints = self.GF.get_all_point_coordinates()
         else:
             disc = eval(self._config['discretisation'])
@@ -73,7 +73,7 @@ class FieldworkModelEvaluationStep(WorkflowStepMountPoint):
                 else:
                     X = []
                     for e in elems:
-                        X.append(discretiseElementRegularGeoD( e, disc, geoCoords=True ))
+                        X.append(self.GF.discretiseElementRegularGeoD( e, disc, geoCoords=True ))
 
                     self.evalPoints = np.vstack(X)
             else:
@@ -109,7 +109,7 @@ class FieldworkModelEvaluationStep(WorkflowStepMountPoint):
         then set:
             self._configured = True
         '''
-        dlg = ConfigureDialog()
+        dlg = ConfigureDialog(QtGui.QApplication.activeWindow().currentWidget())
         dlg.identifierOccursCount = self._identifierOccursCount
         dlg.setConfig(self._config)
         dlg.validate()
@@ -135,15 +135,20 @@ class FieldworkModelEvaluationStep(WorkflowStepMountPoint):
 
     def serialize(self):
         '''
-        Add code to serialize this step to disk. Returns a json string for
-        mapclient to serialise.
+        Add code to serialize this step to disk.  The filename should
+        use the step identifier (received from getIdentifier()) to keep it
+        unique within the workflow.  The suggested name for the file on
+        disk is:
+            filename = getIdentifier() + '.conf'
         '''
         return json.dumps(self._config, default=lambda o: o.__dict__, sort_keys=True, indent=4)
 
     def deserialize(self, string):
         '''
-        Add code to deserialize this step from disk. Parses a json string
-        given by mapclient
+        Add code to deserialize this step from disk.  As with the serialize 
+        method the filename should use the step identifier.  Obviously the 
+        filename used here should be the same as the one used by the
+        serialize method.
         '''
         self._config.update(json.loads(string))
 
