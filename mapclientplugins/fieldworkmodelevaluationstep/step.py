@@ -62,7 +62,7 @@ class FieldworkModelEvaluationStep(WorkflowStepMountPoint):
         '''
         # Put your execute step code here before calling the '_doneExecution' method.
         if self._config['node coordinates']:
-            self.evalPoints = self.GF.get_all_point_coordinates()
+            self.evalPoints = self.GF.get_all_point_positions()
         else:
             disc = eval(self._config['discretisation'])
             elems = self._parseElems()
