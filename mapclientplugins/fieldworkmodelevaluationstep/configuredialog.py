@@ -76,7 +76,6 @@ class ConfigureDialog(QtGui.QDialog):
         config = {}
         config['identifier'] = self._ui.lineEdit0.text()
         config['discretisation'] = self._ui.lineEdit1.text()
-        print(self._ui.lineEdit2.text())
         config['node coordinates'] = self._ui.lineEdit2.text() == 'True'
         config['elements'] = self._ui.lineEdit3.text()
         return config
