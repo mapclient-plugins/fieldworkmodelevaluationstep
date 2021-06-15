@@ -1,65 +1,93 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'configuredialog.ui'
-#
-# Created: Mon Jan 13 15:41:17 2014
-#      by: pyside-uic 0.2.13 running on PySide 1.1.0
-#
-# WARNING! All changes made in this file will be lost!
+################################################################################
+## Form generated from reading UI file 'configuredialog.ui'
+##
+## Created by: Qt User Interface Compiler version 5.15.2
+##
+## WARNING! All changes made in this file will be lost when recompiling UI file!
+################################################################################
 
-from PySide import QtCore, QtGui
+from PySide2.QtCore import *
+from PySide2.QtGui import *
+from PySide2.QtWidgets import *
+
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
+        if not Dialog.objectName():
+            Dialog.setObjectName(u"Dialog")
         Dialog.resize(418, 303)
-        self.gridLayout = QtGui.QGridLayout(Dialog)
-        self.gridLayout.setObjectName("gridLayout")
-        self.configGroupBox = QtGui.QGroupBox(Dialog)
-        self.configGroupBox.setTitle("")
-        self.configGroupBox.setObjectName("configGroupBox")
-        self.formLayout = QtGui.QFormLayout(self.configGroupBox)
-        self.formLayout.setObjectName("formLayout")
-        self.label0 = QtGui.QLabel(self.configGroupBox)
-        self.label0.setObjectName("label0")
-        self.formLayout.setWidget(0, QtGui.QFormLayout.LabelRole, self.label0)
-        self.lineEdit0 = QtGui.QLineEdit(self.configGroupBox)
-        self.lineEdit0.setObjectName("lineEdit0")
-        self.formLayout.setWidget(0, QtGui.QFormLayout.FieldRole, self.lineEdit0)
-        self.label1 = QtGui.QLabel(self.configGroupBox)
-        self.label1.setObjectName("label1")
-        self.formLayout.setWidget(1, QtGui.QFormLayout.LabelRole, self.label1)
-        self.lineEdit1 = QtGui.QLineEdit(self.configGroupBox)
-        self.lineEdit1.setObjectName("lineEdit1")
-        self.formLayout.setWidget(1, QtGui.QFormLayout.FieldRole, self.lineEdit1)
-        self.label2 = QtGui.QLabel(self.configGroupBox)
-        self.label2.setObjectName("label2")
-        self.formLayout.setWidget(2, QtGui.QFormLayout.LabelRole, self.label2)
-        self.lineEdit2 = QtGui.QLineEdit(self.configGroupBox)
-        self.lineEdit2.setObjectName("lineEdit2")
-        self.formLayout.setWidget(2, QtGui.QFormLayout.FieldRole, self.lineEdit2)
-        self.lineEdit3 = QtGui.QLineEdit(self.configGroupBox)
-        self.lineEdit3.setObjectName("lineEdit3")
-        self.formLayout.setWidget(3, QtGui.QFormLayout.FieldRole, self.lineEdit3)
-        self.label3 = QtGui.QLabel(self.configGroupBox)
-        self.label3.setObjectName("label3")
-        self.formLayout.setWidget(3, QtGui.QFormLayout.LabelRole, self.label3)
+        self.gridLayout = QGridLayout(Dialog)
+        self.gridLayout.setObjectName(u"gridLayout")
+        self.configGroupBox = QGroupBox(Dialog)
+        self.configGroupBox.setObjectName(u"configGroupBox")
+        self.formLayout = QFormLayout(self.configGroupBox)
+        self.formLayout.setObjectName(u"formLayout")
+        self.label0 = QLabel(self.configGroupBox)
+        self.label0.setObjectName(u"label0")
+
+        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label0)
+
+        self.lineEdit0 = QLineEdit(self.configGroupBox)
+        self.lineEdit0.setObjectName(u"lineEdit0")
+
+        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.lineEdit0)
+
+        self.label1 = QLabel(self.configGroupBox)
+        self.label1.setObjectName(u"label1")
+
+        self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label1)
+
+        self.lineEdit1 = QLineEdit(self.configGroupBox)
+        self.lineEdit1.setObjectName(u"lineEdit1")
+
+        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.lineEdit1)
+
+        self.label2 = QLabel(self.configGroupBox)
+        self.label2.setObjectName(u"label2")
+
+        self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label2)
+
+        self.lineEdit2 = QLineEdit(self.configGroupBox)
+        self.lineEdit2.setObjectName(u"lineEdit2")
+
+        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.lineEdit2)
+
+        self.lineEdit3 = QLineEdit(self.configGroupBox)
+        self.lineEdit3.setObjectName(u"lineEdit3")
+
+        self.formLayout.setWidget(3, QFormLayout.FieldRole, self.lineEdit3)
+
+        self.label3 = QLabel(self.configGroupBox)
+        self.label3.setObjectName(u"label3")
+
+        self.formLayout.setWidget(3, QFormLayout.LabelRole, self.label3)
+
+
         self.gridLayout.addWidget(self.configGroupBox, 0, 0, 1, 1)
-        self.buttonBox = QtGui.QDialogButtonBox(Dialog)
-        self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
-        self.buttonBox.setObjectName("buttonBox")
+
+        self.buttonBox = QDialogButtonBox(Dialog)
+        self.buttonBox.setObjectName(u"buttonBox")
+        self.buttonBox.setOrientation(Qt.Horizontal)
+        self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
+
         self.gridLayout.addWidget(self.buttonBox, 1, 0, 1, 1)
 
+
         self.retranslateUi(Dialog)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("accepted()"), Dialog.accept)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("rejected()"), Dialog.reject)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.buttonBox.accepted.connect(Dialog.accept)
+        self.buttonBox.rejected.connect(Dialog.reject)
+
+        QMetaObject.connectSlotsByName(Dialog)
+    # setupUi
 
     def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "ConfigureDialog", None, QtGui.QApplication.UnicodeUTF8))
-        self.label0.setText(QtGui.QApplication.translate("Dialog", "identifier:  ", None, QtGui.QApplication.UnicodeUTF8))
-        self.label1.setText(QtGui.QApplication.translate("Dialog", "discretisation:  ", None, QtGui.QApplication.UnicodeUTF8))
-        self.label2.setText(QtGui.QApplication.translate("Dialog", "node coordinates:  ", None, QtGui.QApplication.UnicodeUTF8))
-        self.label3.setText(QtGui.QApplication.translate("Dialog", "elements:", None, QtGui.QApplication.UnicodeUTF8))
+        Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"ConfigureDialog", None))
+        self.configGroupBox.setTitle("")
+        self.label0.setText(QCoreApplication.translate("Dialog", u"identifier:  ", None))
+        self.label1.setText(QCoreApplication.translate("Dialog", u"discretisation:  ", None))
+        self.label2.setText(QCoreApplication.translate("Dialog", u"node coordinates:  ", None))
+        self.label3.setText(QCoreApplication.translate("Dialog", u"elements:", None))
+    # retranslateUi
 

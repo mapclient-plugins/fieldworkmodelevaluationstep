@@ -1,11 +1,10 @@
-
 '''
 MAP Client Plugin Step
 '''
 import json
 import numpy as np
 
-from PySide import QtGui
+from PySide2 import QtGui, QtWidgets
 
 from mapclient.mountpoints.workflowstep import WorkflowStepMountPoint
 from mapclientplugins.fieldworkmodelevaluationstep.configuredialog import ConfigureDialog
@@ -18,7 +17,7 @@ class FieldworkModelEvaluationStep(WorkflowStepMountPoint):
 
     def __init__(self, location):
         super(FieldworkModelEvaluationStep, self).__init__('Fieldwork Model Evaluation', location)
-        self._configured = False # A step cannot be executed until it has been configured.
+        self._configured = False  # A step cannot be executed until it has been configured.
         self._category = 'Fieldwork'
         # Add any other initialisation code here:
         self._icon = QtGui.QImage(':/fieldworkmodelevaluationstep/images/fieldworkmodelevaluationicon.png')
@@ -40,15 +39,15 @@ class FieldworkModelEvaluationStep(WorkflowStepMountPoint):
 
     def _parseElems(self):
         inputStr = self._config['elements']
-        if inputStr=='all':
+        if inputStr == 'all':
             elems = 'all'
         else:
             elems = []
             words = inputStr.split(',')
             for w in words:
                 if '-' in w:
-                    x0,x1 = w.split('-')
-                    elems += range(int(x0), int(x1)+1)
+                    x0, x1 = w.split('-')
+                    elems += range(int(x0), int(x1) + 1)
                 else:
                     elems.append(int(w))
 
@@ -67,21 +66,21 @@ class FieldworkModelEvaluationStep(WorkflowStepMountPoint):
             disc = eval(self._config['discretisation'])
             elems = self._parseElems()
             if isinstance(disc, float):
-                if elems=='all':
-                    self.evalPoints = self.GF.discretiseAllElementsRegularGeoD( self, disc,\
-                                        geoCoords=True, unpack=True)[1]
+                if elems == 'all':
+                    self.evalPoints = self.GF.discretiseAllElementsRegularGeoD(self, disc, \
+                                                                               geoCoords=True, unpack=True)[1]
                 else:
                     X = []
                     for e in elems:
-                        X.append(self.GF.discretiseElementRegularGeoD( e, disc, geoCoords=True ))
+                        X.append(self.GF.discretiseElementRegularGeoD(e, disc, geoCoords=True))
 
                     self.evalPoints = np.vstack(X)
             else:
-                if elems=='all':
+                if elems == 'all':
                     self.evalPoints = self.GF.evaluate_geometric_field(disc).T
                 else:
-                    self.evalPoints = self.GF.evaluate_geometric_field_in_elements( disc,\
-                        elems).T
+                    self.evalPoints = self.GF.evaluate_geometric_field_in_elements(disc, \
+                                                                                   elems).T
 
         self._doneExecution()
 
@@ -91,7 +90,7 @@ class FieldworkModelEvaluationStep(WorkflowStepMountPoint):
         The index is the index of the port in the port list.  If there is only one
         uses port for this step then the index can be ignored.
         '''
-        self.GF = dataIn # ju#fieldworkmodel
+        self.GF = dataIn  # ju#fieldworkmodel
 
     def getPortData(self, index):
         '''
@@ -99,7 +98,7 @@ class FieldworkModelEvaluationStep(WorkflowStepMountPoint):
         The index is the index of the port in the port list.  If there is only one
         provides port for this step then the index can be ignored.
         '''
-        return self.evalPoints # ju#pointcoordinates
+        return self.evalPoints  # ju#pointcoordinates
 
     def configure(self):
         '''
@@ -109,15 +108,15 @@ class FieldworkModelEvaluationStep(WorkflowStepMountPoint):
         then set:
             self._configured = True
         '''
-        dlg = ConfigureDialog(QtGui.QApplication.activeWindow().currentWidget())
+        dlg = ConfigureDialog(self._main_window)
         dlg.identifierOccursCount = self._identifierOccursCount
         dlg.setConfig(self._config)
         dlg.validate()
         dlg.setModal(True)
-        
+
         if dlg.exec_():
             self._config = dlg.getConfig()
-        
+
         self._configured = dlg.validate()
         self._configuredObserver()
 
@@ -156,5 +155,3 @@ class FieldworkModelEvaluationStep(WorkflowStepMountPoint):
         d.identifierOccursCount = self._identifierOccursCount
         d.setConfig(self._config)
         self._configured = d.validate()
-
-
