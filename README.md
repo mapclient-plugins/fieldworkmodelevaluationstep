@@ -10,7 +10,7 @@ None
 
 Inputs
 ------
-- **ju#fieldworkmodel** [GIAS2 Fieldwork Geometric Field instance] - a
+- **ju#fieldworkmodel** [GIAS3 Fieldwork Geometric Field instance] - a
 fieldwork model to be evaluated.
 
 Outputs
