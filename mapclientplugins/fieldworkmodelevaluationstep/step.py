@@ -4,7 +4,7 @@ MAP Client Plugin Step
 import json
 import numpy as np
 
-from PySide2 import QtGui, QtWidgets
+from PySide6 import QtGui
 
 from mapclient.mountpoints.workflowstep import WorkflowStepMountPoint
 from mapclientplugins.fieldworkmodelevaluationstep.configuredialog import ConfigureDialog
